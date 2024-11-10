@@ -20,3 +20,4 @@ const router = createRouter({
 const app = createApp(App);
 app.use(router);
 app.mount('#app');
+document.querySelector('body').style.overflowY = 'scroll';

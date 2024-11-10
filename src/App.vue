@@ -73,6 +73,11 @@ main {
 
 footer {
   z-index: 1; /* Ensure footer is above the video */
-  margin: 20px; /* Add margin for spacing */
+  margin: 0; /* Remove margin for no unwanted space */
+  padding: 10px 20px; /* Add some padding for internal spacing */
+  width: 100%; /* Ensure footer spans the full width */
+  background-color: rgba(255, 255, 255, 0.1); /* Optional: add background color for visibility */
+  text-align: center; /* Center align text in footer */
 }
+
 </style>

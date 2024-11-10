@@ -41,6 +41,7 @@ export default {
 </script>
 
 <style scoped>
+/* General layout */
 .year-page {
   text-align: center;
   color: #ffffff;
@@ -58,13 +59,16 @@ export default {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
+  max-width: 100vw; /* Prevent horizontal overflow */
+  overflow-x: hidden;
 }
 
 .card {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 1.5rem;
-  width: calc(33% - 2rem); /* Limit to 3 cards per row */
+  width: calc(33% - 2rem); /* 3 cards per row on larger screens */
+  max-width: 300px; /* Restrict max width for better mobile responsiveness */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
   color: #fff;
@@ -116,6 +120,31 @@ export default {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    width: 100%; /* Full width on small screens */
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem; /* Reduce padding on very small screens */
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .card button {
+    padding: 0.4rem 0.8rem;
   }
 }
 </style>
