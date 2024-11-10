@@ -1,13 +1,26 @@
-<!-- src/components/AnimatedCard.vue -->
 <template>
   <div class="card" @click="navigateToYear">
-    <h2>{{ year }} Year</h2>
+    <h2>{{ romanYear }} Year</h2>
   </div>
 </template>
 
 <script>
 export default {
   props: ['year'],
+  computed: {
+    romanYear() {
+      // Map numbers 1-4 to their Roman numeral equivalents
+      const romanMap = {
+        1: 'I',
+        2: 'II',
+        3: 'III',
+        4: 'IV'
+      };
+      
+      // Return the Roman numeral if year is between 1 and 4, else return the number itself
+      return romanMap[this.year] || this.year;
+    }
+  },
   methods: {
     navigateToYear() {
       this.$router.push({ name: 'YearPage', params: { year: this.year } });
@@ -17,17 +30,5 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  cursor: pointer;
-  padding: 20px;
-  margin: 20px;
-  border: 2px solid #4CAF50;
-  border-radius: 10px;
-  text-align: center;
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.1);
-}
+/* Your existing CSS code */
 </style>
