@@ -1,23 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home.vue';
-import FirstYear from '@/views/1Year.vue';
+import Vue from 'vue';
+import Router from 'vue-router';
+import YearPage from '@/components/YearPage.vue'; // Assuming this is the dynamic page component
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/1year',
-    name: '1Year',
-    component: FirstYear,
-  },
-];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+Vue.use(Router);
+
+export default new Router({
+  routes: [
+    {
+      path: '/year/:year',  // Dynamic route with the year parameter
+      name: 'year',
+      component: YearPage,  // Component that will render the dynamic page
+    },
+  ]
 });
-
-export default router;

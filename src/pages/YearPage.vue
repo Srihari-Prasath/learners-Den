@@ -1,14 +1,19 @@
 <template>
   <div class="year-page">
-    <h1 class="title">{{ subjectTitle }}</h1>
+    <h1 class="title">{{ year }} Year</h1>
 
-    <div class="units">
-      <transition-group name="fade" tag="div" class="cards-container">
-        <div v-for="unit in units" :key="unit.title" class="card">
-          <h3>{{ unit.title }}</h3>
-          <button @click="download(unit.pdf)">Download PDF</button>
+    <div class="subjects">
+      <div v-for="subject in subjects" :key="subject.title" class="subject">
+        <h2>{{ subject.title }}</h2>
+        <div class="units">
+          <transition-group name="fade" tag="div" class="cards-container">
+            <div v-for="unit in subject.units" :key="unit.title" class="card">
+              <h3>{{ unit.title }}</h3>
+              <button @click="download(unit.pdf)">Download PDF</button>
+            </div>
+          </transition-group>
         </div>
-      </transition-group>
+      </div>
     </div>
   </div>
 </template>
@@ -18,22 +23,60 @@ export default {
   name: 'YearPage',
   data() {
     return {
-      year: this.$route.params.year,
-      subjectTitle: 'Problem Solving and Python Programming',
-      units: [
-        { title: 'Unit 1 - Introduction to PSPP', pdf: 'path/to/pspp_unit1.pdf' },
-        { title: 'Unit 2 - Advanced PSPP Concepts', pdf: 'path/to/pspp_unit2.pdf' },
-        { title: 'Unit 3 - PSPP in Practice', pdf: 'path/to/pspp_unit3.pdf' },
-        { title: 'Unit 4 - PSPP in Practice', pdf: 'path/to/pspp_unit4.pdf' },
-        { title: 'Unit 5 - PSPP in Practice', pdf: 'path/to/pspp_unit5.pdf' },
-      ]
+      year: this.$route.params.year, // Get the year from route params
+      subjects: this.getSubjects(this.$route.params.year) // Dynamically load subjects for the given year
     };
   },
   methods: {
+    // Function to fetch the subjects for the specific year
+    getSubjects(year) {
+      const subjectsData = {
+        1: [
+          {
+            title: 'GE3151 - Problem Solving and Python Programming',
+            units: [
+              { title: 'Unit 1 - COMPUTATIONAL THINKING AND PROBLEM SOLVING', pdf: 'src/assets/docs/pspp/Unit_1.pdf' },
+              { title: 'Unit 2 - DATA TYPES, EXPRESSIONS, STATEMENTS', pdf: 'src/assets/docs/pspp/Unit_2.pdf' },
+              { title: 'Unit 3 - CONTROL FLOW, FUNCTIONS, STRINGS', pdf: 'src/assets/docs/pspp/Unit_3.pdf' },
+              { title: 'Unit 4 - LISTS, TUPLES, DICTIONARIES', pdf: 'src/assets/docs/pspp/Unit_4.pdf' },
+              { title: 'Unit 5 - FILES, MODULES, PACKAGES', pdf: 'src/assets/docs/pspp/Unit_5.pdf' },
+              { title: 'PSPP QB', pdf: 'src/assets/docs/pspp/PSPP_QB.pdf' },
+            ]
+          },
+          {
+            title: 'GE3171 - Problem Solving and Python Programming Laboratory',
+            units: [
+              { title: 'LAB', pdf: 'src/assets/docs/pspp/PSPP lab manual.pdf' },
+            ]
+          }
+        ],
+        3: [
+          {
+            title: 'CC3551  - DISTRIBUTED COMPUTING',
+            units: [
+              { title: 'Distributed Computing - Full Notes', pdf: 'src/assets/docs/DC/DC FULL NOTES.pdf' },
+              { title: 'Distributed Computing - QB', pdf: 'src/assets/docs/DC/DC QBANK.pdf' },
+            ]
+          },
+          {
+            title: 'CCS335 - CLOUD COMPUTING & Lab',
+            units: [
+              { title: 'Cloud Computing - Full Notes', pdf: 'src/assets/docs/CC/cloud Notes.pdf' },
+              { title: 'Cloud Computing - QB', pdf: 'src/assets/docs/CC/Cloud_Computing_QBank.pdf' },
+              { title: 'Cloud Computing - Lab Manual', pdf: 'src/assets/docs/CC/lab manual.pdf' },
+            ]
+          }
+        ],
+        // Add more years and subjects here as needed
+      };
+      return subjectsData[year] || [];
+    },
+
+    // Method for downloading the PDF file
     download(filePath) {
       const link = document.createElement('a');
       link.href = filePath;
-      link.download = '';
+      link.download = filePath.split('/').pop(); // Use the filename from the path
       link.click();
     }
   }
@@ -52,6 +95,20 @@ export default {
   margin-bottom: 1rem;
   color: #f0f0f0;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.subjects {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.subject {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .cards-container {
@@ -77,6 +134,12 @@ export default {
   align-items: center;
   animation: fadeIn 0.6s ease forwards;
   opacity: 0;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
 }
 
 .card h3 {
@@ -91,11 +154,12 @@ export default {
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s ease;
 }
 
 .card button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 /* Fade animation */

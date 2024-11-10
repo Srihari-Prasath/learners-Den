@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
-    <p>&copy; 2024 Your Company. All rights reserved.</p>
-    <p>Follow us on social media!</p>
+    <p>&copy; Abirami Kayathiri S . All rights reserved.</p>
+    <p>dev - github </p>
   </footer>
 </template>
 
